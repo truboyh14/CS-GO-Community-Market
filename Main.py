@@ -20,9 +20,10 @@ class LoginScreen(GridLayout):
 
 
 
+
 class MyApp(App):
 
-    def build(self):
+    def build(self) -> LoginScreen:
         return LoginScreen()
 
 

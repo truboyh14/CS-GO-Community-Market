@@ -10,9 +10,9 @@ class Crate:
     name: name os this crate
     type: type of this crate
     tier: tier of this crate ranging from 1-3
-    tier 1: common(80%), rare(18%), legendary(2%)
-    tier 2: common(60%), rare(32%), legendary(8%)
-    tier 3: common(40%), rare(42%), legendary(18%)
+    tier 1: common(78%), rare(20%), legendary(2%)
+    tier 2: common(52%), rare(40%), legendary(8%)
+    tier 3: common(22%), rare(60%), legendary(18%)
     containing: all list of items it might contain
     """
     name: str
@@ -35,7 +35,7 @@ class Crate:
         draw = random.randrange(1, 100)
         if draw < 2 * (self.tier ** 2):
             return self.containing[0]
-        elif draw < 20 * self.tier:
+        elif draw < 20 * self.tier + 2 * (self.tier ** 2):
             return self.containing[1]
         else:
             return self.containing[2]
