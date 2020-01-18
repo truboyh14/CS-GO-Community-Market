@@ -1,5 +1,8 @@
 import Item
 import random
+import math
+
+
 class Crate:
     """Crate that contains a game item
 
@@ -7,25 +10,32 @@ class Crate:
     name: name os this crate
     type: type of this crate
     tier: tier of this crate ranging from 1-3
-    description: items it might contain
+    tier 1: common(80%), rare(18%), legendary(2%)
+    tier 2: common(60%), rare(32%), legendary(8%)
+    tier 3: common(40%), rare(42%), legendary(18%)
+    containing: all list of items it might contain
     """
     name: str
-    type: str
     tier: int
-    containing: [Item,Item,Item]
+    containing: [Item, Item, Item]
 
-    def __init__(self, name, tier, type, containing) -> None:
+    def __init__(self, name, tier, containing) -> None:
         """Initialize this crate
         """
         self.name = name
         self.tier = tier
-        self.type = type
         self.containing = containing
 
     def unbox(self) -> Item:
-        random.randrange(start, stop[, step])
-
-
-
-
-
+        """
+        open a crate with items
+        :return: opened item
+        :rtype: Item
+        """
+        draw = random.randrange(1, 100)
+        if draw < 2 * (self.tier ** 2):
+            return self.containing[0]
+        elif draw < 20 * self.tier:
+            return self.containing[1]
+        else:
+            return self.containing[2]
