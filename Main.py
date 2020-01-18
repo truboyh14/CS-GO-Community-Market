@@ -6,6 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 
+
 class LoginScreen(GridLayout):
 
     def __init__(self, **kwargs):
@@ -19,12 +20,10 @@ class LoginScreen(GridLayout):
         self.add_widget(self.password)
 
 
-
 class MyApp(App):
 
     def build(self):
         return LoginScreen()
-
 
 
 if __name__ == '__main__':
