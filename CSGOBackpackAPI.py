@@ -1,7 +1,8 @@
 import requests
 
 
-# Get all the in-game items in CS:GO through http://CSGOBackpack.net REST API
+# Get the information of in-game items in CS:GO through
+# http://CSGOBackpack.net REST API
 def get_items() -> list:
     # Attempt to retrieve created list from workspace
     try:
