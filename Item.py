@@ -1,16 +1,10 @@
-class Item:
-    """Game Item
+from CSGOBackpackAPI import get_items
+from random import randrange
 
-    === Attributes ===
-    name: name of this item
-    tier: tier of this item
-    description: description of this item
-    example- "ruby", "gem", 2, "shiny red jewel"
-    """
-    name: str
-    tier: int
 
-    def __init__(self, name, tier) -> None:
-        """Initialize this item
-        """
-        self.details = (name, tier)
+def draw_a_random_item() -> str:
+    items = get_items()
+
+    lucky_number = randrange(len(items))
+
+    return items[lucky_number]

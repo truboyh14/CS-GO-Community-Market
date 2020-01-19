@@ -1,13 +1,14 @@
 import requests
 
 
+# Get all the in-game items in CS:GO through http://CSGOBackpack.net REST API
 def get_items() -> list:
-    # Cache the items list from server to save time
+    # Attempt to retrieve created list from workspace
     try:
         f = open('./items_list.txt', encoding="utf8")
         items = f.read().splitlines()
 
-    # Retrieve from server if doesn't exist locally
+    # Retrieve from server if doesn't exist on workspace
     except FileNotFoundError:
         url = "http://csgobackpack.net/api/GetItemsList/v2"
 
