@@ -8,6 +8,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from pathlib import Path
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.popup import Popup
 
 
 
@@ -31,7 +32,7 @@ Builder.load_string("""
         Button:
             text:"Login"
             on_press:
-                root.manager.current="second"
+                app.login_attempt()
 <MainScreen>:
     Button:
         text:"Go Back"
@@ -77,6 +78,9 @@ class MainScreen(Screen):
     # def go_back_pressed(self, instance):
     #     self.app.current = LoginScreen
 
+# class Login_Fail_Popup(FloatLayOut):
+#     pass
+
 
 wm = ScreenManager()
 wm.add_widget(LoginScreen(name='main'))
@@ -85,6 +89,13 @@ wm.add_widget(MainScreen(name='second'))
 class MyApp(App):
     def build(self):
         return wm
+    def login_attempt(self):
+        #CHECK LOGIN CREDENTIAL
+        # if PASS
+        self.root.current = "second"
+        # if FAIL
+
+
 
 class MainApp(App):
     def build(self):
