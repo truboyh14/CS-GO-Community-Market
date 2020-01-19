@@ -4,7 +4,8 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition, \
+    FallOutTransition, NoTransition
 from kivy.uix.boxlayout import BoxLayout
 from pathlib import Path
 from kivy.app import App
@@ -15,7 +16,7 @@ from kivy.core.window import Window
 Window.clearcolor = (1, 1, 1, 1)
 # kv = Builder.load_file(os.path.join(dirname(__file__), '../uofthacks2020/my.kv'))
 Builder.load_string("""
-<ItemsScreen>:
+<MainScreen>:
     GridLayout:
         cols: 2
         GridLayout:
@@ -31,25 +32,142 @@ Builder.load_string("""
                 size_hint_x: None
                 width: 200
                 on_press:
-                    items_event()
+                    app.items_event()
             Button:
                 text: "Transactions"
                 size_hint_x: None
                 width: 200
                 on_press:
-                    transactions_event()
+                    app.transactions_event()
             Button:
                 text: "Users"
                 size_hint_x: None
                 width: 200
                 on_press:
-                    users_event()
+                    app.users_event()
             Button:
                 text: "My vault"                
                 size_hint_x: None
                 width: 200
                 on_press:
-                    vault_event()
+                    app.vault_event()
+                
+        Label:
+            button: "Right"
+            background_color: 1, .3, .4, .85
+<TransactionsScreen>:
+    GridLayout:
+        cols: 2
+        GridLayout:
+            rows: 5
+            Label:
+                text: "CS:GO Market Place"
+                color: 0,0,0,1
+                size_hint_x: None
+                width: 200
+            Button:
+                text: "Items"
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.items_event()
+            Button:
+                text: "Transactions"
+                background_color: 1, .3, .4, .85
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.transactions_event()
+            Button:
+                text: "Users"
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.users_event()
+            Button:
+                text: "My vault"                
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.vault_event()
+                
+        Label:
+            button: "Right"
+            background_color: 1, .3, .4, .85
+<UsersScreen>:
+    GridLayout:
+        cols: 2
+        GridLayout:
+            rows: 5
+            Label:
+                text: "CS:GO Market Place"
+                color: 0,0,0,1
+                size_hint_x: None
+                width: 200
+            Button:
+                text: "Items"
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.items_event()
+            Button:
+                text: "Transactions"
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.transactions_event()
+            Button:
+                text: "Users"
+                background_color: 1, .3, .4, .85
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.users_event()
+            Button:
+                text: "My vault"                
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.vault_event()
+                
+        Label:
+            button: "Right"
+            background_color: 1, .3, .4, .85
+<VaultScreen>:
+    GridLayout:
+        cols: 2
+        GridLayout:
+            rows: 5
+            Label:
+                text: "CS:GO Market Place"
+                color: 0,0,0,1
+                size_hint_x: None
+                width: 200
+            Button:
+                text: "Items"
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.items_event()
+            Button:
+                text: "Transactions"
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.transactions_event()
+            Button:
+                text: "Users"
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.users_event()
+            Button:
+                text: "My vault"           
+                background_color: 1, .3, .4, .85     
+                size_hint_x: None
+                width: 200
+                on_press:
+                    app.vault_event()
                 
         Label:
             button: "Right"
@@ -126,7 +244,7 @@ Builder.load_string("""
 #     #     # get data from toda and compare
 
 
-class ItemsScreen(Screen):
+class MainScreen(Screen):
     pass
 
 
@@ -150,8 +268,8 @@ class VaultScreen(Screen):
 #     pass
 
 
-wm = ScreenManager()
-wm.add_widget(ItemsScreen(name='items'))
+wm = ScreenManager(transition=NoTransition())
+wm.add_widget(MainScreen(name='items'))
 wm.add_widget(TransactionsScreen(name='transactions'))
 wm.add_widget(UsersScreen(name='users'))
 wm.add_widget(VaultScreen(name='vault'))
@@ -171,6 +289,9 @@ class Main(App):
     #     self.root.current = "items"
     #     # if FAIL
     #     self.show_pop_up()
+
+    def items_event(self):
+        self.root.current = "items"
 
     def transactions_event(self):
         self.root.current = "transactions"
