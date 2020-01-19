@@ -6,30 +6,37 @@ headers = {"Content-Type": "application/json",
            "x-api-key": myApiKey}
 
 
-def accounts() -> None:
+def get_accounts() -> list:
     url = origin + "/accounts"
     # page starts at 1
     page = 1
 
     params = {"filter[active]": "true",
               "page": page,
-              "limit": 10}
+              "limit": 10000}
+
+    total = []
     while True:
         r = requests.get(url, params=params, headers=headers).json()
         for user in r["data"]:
-            print("%s %s: %s" % (user["attributes"]["contact"]["first-name"],
-                                 user["attributes"]["contact"]["last-name"],
-                                 user["id"]))
+            total.append(user["id"])
 
         if "next" not in r["links"]:
-            break
+            print(total)
+            return total
         else:
             page += 1
             params["page"] = page
-            print(params)
 
 
-def create(last_name: str, first_name: str) -> None:
+def generate_ecdsa() -> list:
+    r = requests.get("https://8gwifi.org/crypto/rest/ec/generatekpecdsa/prime256v1").json()
+    generated = [r["ecprivateKeyA"], r["ecpubliceKeyA"]]
+    print(generated)
+    return generated
+
+
+def create_account() -> None:
     url = origin + "/accounts"
     data = {
         "type": "account",
@@ -38,8 +45,8 @@ def create(last_name: str, first_name: str) -> None:
                 "account-type": "individual",
                 "admin-email": "truman@example.com",
                 "contact": {
-                    "last-name": last_name,
-                    "first-name": first_name
+                    "last-name": "anonymous",
+                    "first-name": "anonymous"
                 }
             }
         }
@@ -49,4 +56,4 @@ def create(last_name: str, first_name: str) -> None:
 
 
 if __name__ == "__main__":
-    create("Morrison", "Scott")
+    get_accounts()
