@@ -34,10 +34,39 @@ Builder.load_string("""
             on_press:
                 app.login_attempt()
 <MainScreen>:
-    Button:
-        text:"Go Back"
-        on_press:
-            root.manager.current="main"
+    GridLayout:
+        cols: 1
+        GridLayout:
+            cols: 2
+            Label:
+                text: "Username"
+            Button:
+                text: "Open Crate"
+                on_press:
+                    app.open_crate()
+        GridLayout:
+            cols: 3
+            Label:
+                text: "Item"
+            Label:
+                text: "Rarity"
+            Label:
+                text: "Owner ID"
+            
+        GridLayout:
+            cols: 3
+            Label:
+                text: "LOL"
+            Label:
+                text: "GG"
+            Button:
+                text: "Trade"
+                on_press:
+                    app.start_trade()
+        Button:
+            text:"Go Back"
+            on_press:
+                root.manager.current="second"
 <Login_Fail_Popup>
     Label:
         text: "Credential does not match"
@@ -97,8 +126,8 @@ class Create_New_Account_Popup(Screen):
 
 
 wm = ScreenManager()
-wm.add_widget(LoginScreen(name='main'))
-wm.add_widget(MainScreen(name='second'))
+wm.add_widget(MainScreen(name='main'))
+wm.add_widget(LoginScreen(name='second'))
 wm.add_widget(Login_Fail_Popup(name='fail_login'))
 
 
@@ -109,7 +138,7 @@ class MyApp(App):
     def login_attempt(self):
         #CHECK LOGIN CREDENTIAL
         # if PASS
-        #self.root.current = "second"
+        self.root.current = "main"
         # if FAIL
         self.show_pop_up()
     def show_pop_up(self):
@@ -119,11 +148,10 @@ class MyApp(App):
     def create_new_account(self):
         pass
         #create new account
-
-
-class MainApp(App):
-    def build(self):
-        return MainScreen()
+    def open_crate(self):
+        pass
+    def start_trade(self):
+        pass
 
 if __name__ == '__main__':
     MyApp().run()
