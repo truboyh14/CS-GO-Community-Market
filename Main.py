@@ -1,16 +1,7 @@
-import kivy
-import os.path
-from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
-from kivy.uix.screenmanager import ScreenManager, Screen
-from pathlib import Path
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
-
-
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 # kv = Builder.load_file(os.path.join(dirname(__file__), '../uofthacks2020/my.kv'))
 Builder.load_string("""
@@ -51,6 +42,7 @@ Builder.load_string("""
             app.create_new_account()
 """)
 
+
 class LoginScreen(Screen):
     pass
     # def __init__(self, **kwargs):
@@ -89,8 +81,10 @@ class MainScreen(Screen):
     # def go_back_pressed(self, instance):
     #     self.app.current = LoginScreen
 
+
 class Login_Fail_Popup(Screen):
     pass
+
 
 class Create_New_Account_Popup(Screen):
     pass
@@ -102,28 +96,36 @@ wm.add_widget(MainScreen(name='second'))
 wm.add_widget(Login_Fail_Popup(name='fail_login'))
 
 
-
 class MyApp(App):
     def build(self):
         return wm
+
     def login_attempt(self):
-        #CHECK LOGIN CREDENTIAL
-        # if PASS
-        #self.root.current = "second"
-        # if FAIL
-        self.show_pop_up()
-    def show_pop_up(self):
-        show = Login_Fail_Popup()
-        popupWindow = Popup(title="Popup Window",content=show,size_hint=(None,None),size=(400,400))
-        popupWindow.open()
-    def create_new_account(self):
-        pass
-        #create new account
+        # CHECK LOGIN CREDENTIAL
+        if True:
+            # if PASS
+            self.root.current = "second"
+        else:
+            pass
+            # # if FAIL
+            # self.show_pop_up()
+
+
+def show_pop_up(self):
+    show = Login_Fail_Popup()
+    popupWindow = Popup(title="Popup Window", content=show, size_hint=(None, None), size=(400, 400))
+    popupWindow.open()
+
+
+def create_new_account(self):
+    pass
+    # create new account
 
 
 class MainApp(App):
     def build(self):
         return MainScreen()
+
 
 if __name__ == '__main__':
     MyApp().run()

@@ -17,9 +17,7 @@ def accounts() -> None:
     while True:
         r = requests.get(url, params=params, headers=headers).json()
         for user in r["data"]:
-            print("%s %s: %s" % (user["attributes"]["contact"]["first-name"],
-                                 user["attributes"]["contact"]["last-name"],
-                                 user["id"]))
+            print("%s" % user["id"])
 
         if "next" not in r["links"]:
             break
@@ -29,7 +27,14 @@ def accounts() -> None:
             print(params)
 
 
-def create(last_name: str, first_name: str) -> None:
+def ecdsa_generator() -> list:
+    r = requests.get("https://8gwifi.org/crypto/rest/ec/generatekpecdsa/prime256v1").json()
+    generated = [r["ecprivateKeyA"], r["ecpubliceKeyA"]]
+    print(generated)
+    return generated
+
+
+def create() -> None:
     url = origin + "/accounts"
     data = {
         "type": "account",
@@ -38,8 +43,8 @@ def create(last_name: str, first_name: str) -> None:
                 "account-type": "individual",
                 "admin-email": "truman@example.com",
                 "contact": {
-                    "last-name": last_name,
-                    "first-name": first_name
+                    "last-name": "anonymous",
+                    "first-name": "anonymous"
                 }
             }
         }
@@ -49,4 +54,4 @@ def create(last_name: str, first_name: str) -> None:
 
 
 if __name__ == "__main__":
-    create("Morrison", "Scott")
+    ecdsa_generator()
