@@ -54,9 +54,9 @@ class Crate:
 
 if __name__ == "__main__":
 
-"""
-This example creates 20 crates and unboxes their contents and puts it on a list, it then prints the item details.
-"""
+    """
+    This example creates 20 crates and unboxes their contents and puts it on a list, it then prints the item details.
+    """
     item_list = []
     for i in range(20):
         crate = Crate(str(i))
