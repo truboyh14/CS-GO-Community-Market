@@ -6,6 +6,11 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
+
+
+# kv = Builder.load_file("my.kv")
 
 
 class LoginScreen(GridLayout):
@@ -25,25 +30,33 @@ class LoginScreen(GridLayout):
         self.add_widget(self.inside)
 
         self.login = Button(text="Login", font_size=40)
-        self.login.bind(on_pressed=self.login_pressed)
         self.add_widget(self.login)
+        self.login.bind(on_press=self.login_pressed)
 
     def login_pressed(self, instance):
         username = self.username.text
         password = self.password.text
-        print("HIHIHIHIHIHIHIH")
+        # get data from toda and compare
+        print("hihihihihi")
+        self.app.root.current = MainScreen()
 
 
+class MainScreen(GridLayout):
+    def __init__(self, **kwargs):
+        super(MainScreen, self).__init__(**kwargs)
+        self.cols = 1
+        self.goback = Button(text="Go Back", font_size=40)
+        self.add_widget(self.goback)
+        self.goback.bind(on_press=self.go_back_pressed)
+
+    def go_back_pressed(self, instance):
+        print("HIHIHIHI")
 
 
 class MyApp(App):
-
     def build(self):
         return LoginScreen()
 
 
 if __name__ == '__main__':
     MyApp().run()
-
-
-
