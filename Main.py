@@ -9,8 +9,10 @@ from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
+class WindowManager(ScreenManager):
+    pass
+kv = Builder.load_file("my.kv")
 
-# kv = Builder.load_file("my.kv")
 
 
 class LoginScreen(GridLayout):
@@ -37,8 +39,8 @@ class LoginScreen(GridLayout):
         username = self.username.text
         password = self.password.text
         # get data from toda and compare
-        print("hihihihihi")
-        self.app.root.current = MainScreen()
+        App().stop()
+        MainApp().run()
 
 
 class MainScreen(GridLayout):
@@ -50,13 +52,17 @@ class MainScreen(GridLayout):
         self.goback.bind(on_press=self.go_back_pressed)
 
     def go_back_pressed(self, instance):
-        print("HIHIHIHI")
+        MainApp().stop()
+        MyApp().run()
 
 
 class MyApp(App):
     def build(self):
         return LoginScreen()
 
+class MainApp(App):
+    def build(self):
+        return MainScreen()
 
 if __name__ == '__main__':
     MyApp().run()
