@@ -20,4 +20,3 @@ class Item:
         self.type = type
         self.tier = tier
         self.description = description
-
