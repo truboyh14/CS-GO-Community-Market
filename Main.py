@@ -5,12 +5,11 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.boxlayout import BoxLayout
 from pathlib import Path
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
-
-
 
 # kv = Builder.load_file(os.path.join(dirname(__file__), '../uofthacks2020/my.kv'))
 Builder.load_string("""
@@ -32,7 +31,7 @@ Builder.load_string("""
         Button:
             text:"Login"
             on_press:
-                app.login_attempt()
+                app.login_event()
 <MainScreen>:
     GridLayout:
         cols: 1
@@ -64,21 +63,36 @@ Builder.load_string("""
                 on_press:
                     app.start_trade()
         Button:
-            text:"Go Back"
+            text:"Go to my vault"
             on_press:
                 root.manager.current="second"
-<Login_Fail_Popup>
-    Label:
-        text: "Credential does not match"
-        size_hint: 0.6, 0.2
-        pos_hint: {"x":0.2,"top":0.1}
-    Button:
-        text: "Create New Account"
-        size_hint: 0.8, 0.2
-        pos_hint: {"x":0.1, "y":0.1}
-        on_press:
-            app.create_new_account()
+            background_color: [1, 0, 0, 1]
+<LoginFailPopup>
+    BoxLayout:
+        height: "40dp"
+        # size_hint_y: None
+        Label:
+            text: "Username"
+            size_hint_x: 20
+        TextInput:
+            size_hint_x: 20
+        Button:
+            text: "Check Answer"
+            size_hint_x: 25
+    # TextInput:
+    #     id: username
+    # Label:
+    #     text: "Credential does not match"
+    #     size_hint: 0.6, 0.2
+    #     pos_hint: {"x":0.2,"top":0.1}
+    # Button:
+    #     text: "Create New Account"
+    #     size_hint: 0.8, 0.2
+    #     pos_hint: {"x":0.1, "y":0.1}
+    #     on_press:
+    #         app.create_new_account()
 """)
+
 
 class LoginScreen(Screen):
     pass
@@ -108,50 +122,48 @@ class LoginScreen(Screen):
 
 class MainScreen(Screen):
     pass
-    # def __init__(self, **kwargs):
-    #     super(MainScreen, self).__init__(**kwargs)
-    #     self.cols = 1
-    #     self.goback = Button(text="Go Back", font_size=40)
-    #     self.add_widget(self.goback)
-    #     self.goback.bind(on_press=self.go_back_pressed)
-    #
-    # def go_back_pressed(self, instance):
-    #     self.app.current = LoginScreen
 
-class Login_Fail_Popup(Screen):
+
+class LoginFailPopup(Screen):
     pass
 
-class Create_New_Account_Popup(Screen):
+
+class CreateNewAccountPopup(Screen):
     pass
 
 
 wm = ScreenManager()
 wm.add_widget(MainScreen(name='main'))
 wm.add_widget(LoginScreen(name='second'))
-wm.add_widget(Login_Fail_Popup(name='fail_login'))
+wm.add_widget(LoginFailPopup(name='fail_login'))
 
 
-
-class MyApp(App):
+class Main(App):
     def build(self):
         return wm
-    def login_attempt(self):
-        #CHECK LOGIN CREDENTIAL
+
+    def login_event(self):
+        # CHECK LOGIN CREDENTIAL
         # if PASS
         self.root.current = "main"
         # if FAIL
         self.show_pop_up()
+
     def show_pop_up(self):
-        show = Login_Fail_Popup()
-        popupWindow = Popup(title="Popup Window",content=show,size_hint=(None,None),size=(400,400))
+        show = LoginFailPopup()
+        popupWindow = Popup(title="Login", content=show,
+                            size_hint=(None, None), size=(400, 400))
         popupWindow.open()
+
     def create_new_account(self):
         pass
-        #create new account
+
     def open_crate(self):
         pass
+
     def start_trade(self):
         pass
 
+
 if __name__ == '__main__':
-    MyApp().run()
+    Main().run()

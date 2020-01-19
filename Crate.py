@@ -4,7 +4,6 @@ import math
 
 
 class Crate:
-
     """Crate that contains a game item
 
     === Attributes ===

@@ -29,13 +29,6 @@ def get_accounts() -> list:
             params["page"] = page
 
 
-def generate_ecdsa() -> list:
-    r = requests.get("https://8gwifi.org/crypto/rest/ec/generatekpecdsa/prime256v1").json()
-    generated = [r["ecprivateKeyA"], r["ecpubliceKeyA"]]
-    print(generated)
-    return generated
-
-
 def create_account() -> None:
     url = origin + "/accounts"
     data = {
