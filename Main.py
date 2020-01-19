@@ -38,6 +38,17 @@ Builder.load_string("""
         text:"Go Back"
         on_press:
             root.manager.current="main"
+<Login_Fail_Popup>
+    Label:
+        text: "Credential does not match"
+        size_hint: 0.6, 0.2
+        pos_hint: {"x":0.2,"top":0.1}
+    Button:
+        text: "Create New Account"
+        size_hint: 0.8, 0.2
+        pos_hint: {"x":0.1, "y":0.1}
+        on_press:
+            app.create_new_account()
 """)
 
 class LoginScreen(Screen):
@@ -78,13 +89,19 @@ class MainScreen(Screen):
     # def go_back_pressed(self, instance):
     #     self.app.current = LoginScreen
 
-# class Login_Fail_Popup(FloatLayOut):
-#     pass
+class Login_Fail_Popup(Screen):
+    pass
+
+class Create_New_Account_Popup(Screen):
+    pass
 
 
 wm = ScreenManager()
 wm.add_widget(LoginScreen(name='main'))
 wm.add_widget(MainScreen(name='second'))
+wm.add_widget(Login_Fail_Popup(name='fail_login'))
+
+
 
 class MyApp(App):
     def build(self):
@@ -92,9 +109,16 @@ class MyApp(App):
     def login_attempt(self):
         #CHECK LOGIN CREDENTIAL
         # if PASS
-        self.root.current = "second"
+        #self.root.current = "second"
         # if FAIL
-
+        self.show_pop_up()
+    def show_pop_up(self):
+        show = Login_Fail_Popup()
+        popupWindow = Popup(title="Popup Window",content=show,size_hint=(None,None),size=(400,400))
+        popupWindow.open()
+    def create_new_account(self):
+        pass
+        #create new account
 
 
 class MainApp(App):
