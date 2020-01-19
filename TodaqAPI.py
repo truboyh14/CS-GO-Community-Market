@@ -1,6 +1,7 @@
 import requests
 
 from Item import draw_a_random_item
+from collections import Counter
 
 myApiKey = "3e24c1f2-4db1-4820-a868-e8e763d3988d"
 origin = "https://api.todaqfinance.net"
@@ -22,7 +23,8 @@ def get_accounts() -> list:
     while True:
         r = requests.get(url, params=params, headers=headers).json()
         for user in r["data"]:
-            total.append(user["id"])
+            if user["attributes"]["admin-email"] == "truman@example.com":
+                total.append(user["id"])
 
         if "next" not in r["links"]:
             print(total)
@@ -32,12 +34,37 @@ def get_accounts() -> list:
             params["page"] = page
 
 
-def get_files(account: str) -> None:
+# Return the dictionary of items to quantity that owned by the account
+def get_files_from_account(account: str) -> dict:
     url = "https://api.todaqfinance.net/accounts/" + account + \
           "/files?page=1&limit=10000"
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers).json()
 
-    print(response.json())
+    items = {}
+
+    for file in response["data"]:
+        if "id" not in file["attributes"]["payload"] or file["attributes"]["payload"]["id"] is None or type(file["attributes"]["payload"]["id"]) == int or len(file["attributes"]["payload"]["id"]) == 36:
+            break
+        elif file["attributes"]["payload"]["id"] in items:
+            items[file["attributes"]["payload"]["id"]] += 1
+
+        else:
+            items[file["attributes"]["payload"]["id"]] = 1
+
+    print(items)
+    return items
+
+
+def get_all_files() -> dict:
+    total = Counter({})
+
+    accounts = get_accounts()
+    for account in accounts:
+        a = Counter(get_files_from_account(account))
+        total = total + a
+
+    print(total)
+    return total
 
 
 # Create an account and return its account id
@@ -87,5 +114,6 @@ if __name__ == "__main__":
     recipient = "3c8263ec-fc26-4186-85c2-2f91c7d1762f"
     # get_accounts()
     # account_initialization()
-
-    get_files(recipient)
+    # create_item("Sticker | OpTic Gaming (Holo) | Cologne 2016", recipient)
+    # get_files_from_account(recipient)
+    get_all_files()
