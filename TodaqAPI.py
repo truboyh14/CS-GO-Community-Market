@@ -27,7 +27,6 @@ def get_accounts() -> list:
                 total.append(user["id"])
 
         if "next" not in r["links"]:
-            print(total)
             return total
         else:
             page += 1
@@ -36,14 +35,18 @@ def get_accounts() -> list:
 
 # Return the dictionary of items to quantity that owned by the account
 def get_files_from_account(account: str) -> dict:
-    url = "https://api.todaqfinance.net/accounts/" + account + \
-          "/files?page=1&limit=10000"
+    url = origin + "/accounts/" + account + \
+          "/files?page=1&limit=10"
     response = requests.get(url, headers=headers).json()
 
     items = {}
 
     for file in response["data"]:
-        if "id" not in file["attributes"]["payload"] or file["attributes"]["payload"]["id"] is None or type(file["attributes"]["payload"]["id"]) == int or len(file["attributes"]["payload"]["id"]) == 36:
+        if "id" not in file["attributes"]["payload"] or \
+                file["attributes"]["payload"]["id"] is None or type(
+            file["attributes"]["payload"]["id"]) == int or len(
+            file["attributes"]["payload"]["id"]) == 36:
+            # Ignore the accounts that are not associated to our marketplace
             break
         elif file["attributes"]["payload"]["id"] in items:
             items[file["attributes"]["payload"]["id"]] += 1
@@ -51,10 +54,34 @@ def get_files_from_account(account: str) -> dict:
         else:
             items[file["attributes"]["payload"]["id"]] = 1
 
-    print(items)
     return items
 
 
+# TODO
+def get_transactions_from_account(account: str) -> dict:
+    url = origin + "/accounts/" + account + "/transactions?page=1&limit=10000"
+
+    response = requests.get(url, headers=headers).json()
+
+    items = {}
+
+    for file in response["data"]:
+        if "id" not in file["attributes"]["payload"] or \
+                file["attributes"]["payload"]["id"] is None or type(
+            file["attributes"]["payload"]["id"]) == int or len(
+            file["attributes"]["payload"]["id"]) == 36:
+            # Ignore the accounts that are not associated to our marketplace
+            break
+        elif file["attributes"]["payload"]["id"] in items:
+            items[file["attributes"]["payload"]["id"]] += 1
+
+        else:
+            items[file["attributes"]["payload"]["id"]] = 1
+
+    return items
+
+
+# !!Inefficient
 def get_all_files() -> dict:
     total = Counter({})
 
@@ -63,7 +90,6 @@ def get_all_files() -> dict:
         a = Counter(get_files_from_account(account))
         total = total + a
 
-    print(total)
     return total
 
 
