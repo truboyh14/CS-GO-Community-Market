@@ -5,14 +5,13 @@ def help_command():
     print("ITEMS\t\tDisplay all the items on the marketplace\n"
           "TRANSACTIONS\t\tDisplay all the transactions on the marketplace\n"
           "USERS\t\tDisplay all the users on the marketplace\n"
-          "VAULT address\t\tDisplay my marketplace vault\n"
-          "\taddress\t\tSpecifies the address of your vault")
+          "VAULT \t\tDisplay my marketplace vault")
 
 
 def items_command():
     print("Please wait for a sec...\n")
     files = get_all_files()
-    print("Quant\tItems\n====================")
+    print("Quant\t Items\n====================")
     for file in files:
         print("%sx\t\t %s" % (files[file], file))
 
@@ -22,6 +21,23 @@ def users_command():
     print("Users\n====================")
     for user in users:
         print(user)
+
+
+def vault_command():
+    address = input("Enter your wallet address: ")
+
+    try:
+        files = get_files_from_account(address)
+    except Exception as error:
+        print(error)
+        return
+
+    if len(files) == 0:
+        print("Your vault is empty.")
+
+    print("Quant\t Items\n====================")
+    for file in files:
+        print("%sx\t\t %s" % (files[file], file))
 
 
 if __name__ == '__main__':
@@ -43,7 +59,7 @@ if __name__ == '__main__':
             pass
         elif command == "USERS":
             users_command()
-        elif command.split()[0] == "VAULT":
-            print("vault")
+        elif command == "VAULT":
+            vault_command()
         else:
             print("%s: command not found" % user_input)

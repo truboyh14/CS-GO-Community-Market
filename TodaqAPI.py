@@ -147,4 +147,4 @@ if __name__ == "__main__":
     # create_item("Sticker | OpTic Gaming (Holo) | Cologne 2016", recipient)
     # get_files_from_account(recipient)
     # get_all_files()
-get_files_from_account("AFDFSD")
+# get_files_from_account("AFDFSD")
