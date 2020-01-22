@@ -31,11 +31,11 @@ if __name__ == '__main__':
     command = ""
     while command != "EXIT":
         user_input = input("> ")
-        command = user_input.upper()
+        command = user_input.strip(' \t\n\r').upper()
 
-        if command != "":
+        if len(command) == 0:
             pass
-        if command == "HELP":
+        elif command == "HELP":
             help_command()
         elif command == "ITEMS":
             items_command()
