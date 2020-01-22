@@ -1,4 +1,4 @@
-from TodaqAPI import get_all_files
+from TodaqAPI import *
 
 
 def help_command():
@@ -12,9 +12,16 @@ def help_command():
 def items_command():
     print("Please wait for a sec...\n")
     files = get_all_files()
-    print("Quant\tItems")
+    print("Quant\tItems\n====================")
     for file in files:
         print("%sx\t\t %s" % (files[file], file))
+
+
+def users_command():
+    users = get_accounts()
+    print("Users\n====================")
+    for user in users:
+        print(user)
 
 
 if __name__ == '__main__':
@@ -33,7 +40,7 @@ if __name__ == '__main__':
         elif command == "TRANSACTIONS":
             pass
         elif command == "USERS":
-            pass
+            users_command()
         elif command.split()[0] == "VAULT":
             print("vault")
             pass
