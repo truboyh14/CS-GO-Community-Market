@@ -33,6 +33,8 @@ if __name__ == '__main__':
         user_input = input("> ")
         command = user_input.upper()
 
+        if command != "":
+            pass
         if command == "HELP":
             help_command()
         elif command == "ITEMS":
@@ -43,6 +45,5 @@ if __name__ == '__main__':
             users_command()
         elif command.split()[0] == "VAULT":
             print("vault")
-            pass
         else:
             print("%s: command not found" % user_input)
