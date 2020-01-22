@@ -1,7 +1,8 @@
+from collections import Counter
+
 import requests
 
 from Item import draw_a_random_item
-from collections import Counter
 
 myApiKey = "3e24c1f2-4db1-4820-a868-e8e763d3988d"
 origin = "https://api.todaqfinance.net"
@@ -40,6 +41,9 @@ def get_files_from_account(account: str) -> dict:
     response = requests.get(url, headers=headers).json()
 
     items = {}
+
+    if "errors" in response:
+        raise Exception("%s: %s" % (response["errors"][0]["status"], response["errors"][0]["detail"]))
 
     for file in response["data"]:
         if "id" not in file["attributes"]["payload"] or \
@@ -142,4 +146,5 @@ if __name__ == "__main__":
     # account_initialization()
     # create_item("Sticker | OpTic Gaming (Holo) | Cologne 2016", recipient)
     # get_files_from_account(recipient)
-    get_all_files()
+    # get_all_files()
+get_files_from_account("AFDFSD")
