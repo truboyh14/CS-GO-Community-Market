@@ -23,7 +23,8 @@ if __name__ == '__main__':
 
     command = ""
     while command != "EXIT":
-        command = input("> ").upper()
+        user_input = input("> ")
+        command = user_input.upper()
 
         if command == "HELP":
             help_command()
@@ -36,4 +37,5 @@ if __name__ == '__main__':
         elif command.split()[0] == "VAULT":
             print("vault")
             pass
-
+        else:
+            print("%s: command not found" % user_input)
